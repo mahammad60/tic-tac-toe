@@ -1,0 +1,113 @@
+#create player o and x to
+
+#create a board to put player O and X so they can play
+  
+#whichever number player x or o puts in we gonna print that board to be able to play
+  # put X or O in the tiles board and display it straight away
+# check for win or tie
+
+board =    ["-","-","-",
+           "-","-","-",
+           "-","-","-"] 
+
+
+player = "X"
+winner = None
+gamerunning = True
+
+
+
+def print_board(board):
+    print(str(board[0]) + "|" + str(board[1]) + "|" + 
+    str(board[2]))
+    print(str(board[3]) + "|" + str(board[4]) + "|" + 
+    str(board[5]))
+    print(str(board[6]) + "|" + str(board[7]) + "|" + 
+    str(board[8]))
+
+
+
+print_board(board)
+
+def playerinput(board):
+  coq = int(input("enter a number 1-9 "))
+  if coq >= 1 and coq <= 9 and board[coq-1] == "-":
+     board[coq-1] = player
+
+  
+  else:
+    print("player is already on that spot")
+    playerinput(board)
+
+
+
+def checkhorizontle(board):
+    if board[0] == board[1] == board[2] and board[1] != "-":
+      global winner
+      winner = board[0]
+      return True
+
+    elif board [3] == board[4] == board[5] and board [3] != "-":
+       winner = board[3]
+       return True
+
+    elif board [6] == board [7] == board [8] and board [6] != "-":
+      winner = board[6]
+      return True
+
+
+def checkdiagonally(board):
+  if board [0] == board [3] == board [6] and board [3] !=  "-":
+     global winner
+     winner = board[3]
+     return True
+
+  elif board [1] == board [4] == board [7] and board [1] != "-":
+     winner = board[4]
+     return True
+
+
+  elif board [2] == board [5] == board[8] and board [2] != "-":
+    winner = board[8]
+    return True
+
+def checksideways(board):
+  if board[0] == [4] == board [8] and board[0]  != "-":
+     global winner
+     winner = board[0]
+     return True
+
+
+  elif board [2] == board [4] == board [6] and board [2] != "-":
+    winner = board[0]
+    return True
+    
+def check_win(board):
+  if  checkhorizontle(board) or checksideways(board) or checkdiagonally(board):
+          print(f"the winner is {winner}")
+          gamerunning = False
+check_win(board)
+
+def checktie(board):
+  if "-" not in board:
+      print_board(board)
+      print("it is a tie")
+      gamerunning = False
+
+checktie(board)
+
+def switchplayer():
+  global player
+  if player == "X":
+     player = "O"
+  else:
+     player = "X"
+
+
+
+while gamerunning:
+  print_board(board)
+  playerinput(board)
+  check_win(board)
+  checktie(board)
+  switchplayer()
